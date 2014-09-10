@@ -45,5 +45,5 @@ ITC Ruby api
 The code is available at github [project][home] under [MIT license][license].
 
 [home]: https://github.com/dwnld/itc
-[license]: http://revolunet.mit-license.org
+[license]: https://github.com/dwnld/itc/blob/master/LICENSE
 
