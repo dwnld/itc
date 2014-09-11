@@ -1,7 +1,23 @@
 ITC Ruby api
 ============
 
-## Creating an App
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'itc'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install itc
+
+## Usage
+
+### Creating an App
 
 ```ruby
 > require 'itc'
@@ -15,7 +31,7 @@ ITC Ruby api
 > app_id = app_data['newApp']['adamId']
 ```
 
-## Updating an app
+### Updating an app
 
 ```ruby
 > require 'itc'
@@ -38,7 +54,7 @@ ITC Ruby api
   end
 ```
 
-### Updating app screenshots / icon
+#### Updating app screenshots / icon
 ```ruby
 > require 'itc'
 
@@ -56,10 +72,18 @@ ITC Ruby api
   end
 ```
 
+## Contributing
+
+1. Fork it ( https://github.com/dwnld/itc/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
+
 ## License:
 
 The code is available at github [project][home] under [MIT license][license].
 
 [home]: https://github.com/dwnld/itc
-[license]: https://github.com/dwnld/itc/blob/master/LICENSE
+[license]: https://github.com/dwnld/itc/blob/master/LICENSE.txt
 
