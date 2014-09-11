@@ -2,7 +2,7 @@ require 'itc/models'
 
 module Itc
   module PostData
-    def create_app_data(name, version, bundle_id, vendor_id, company_name)
+    def create_app_data(name, version, bundle_id, vendor_id)
       {
         newApp: {
           appType: 'iOS App',
@@ -13,7 +13,6 @@ module Itc
           vendorId: v(vendor_id),
         },
         versionString: v(version),
-        companyName: v(company_name)
       }
     end
 
