@@ -11,8 +11,8 @@ ITC Ruby api
 # Register "bundle_id" in developer portal first
 > app_data = agent.create_app("name", "version", "bundle_id", "vendor_id", "company_name")
 
-# new_app_id is Apple's unique identifier for the app
-> new_app_id = app_data['newApp']['adamId']
+# app_id is Apple's unique identifier for the app
+> app_id = app_data['newApp']['adamId']
 ```
 
 ## Updating an app
@@ -21,9 +21,7 @@ ITC Ruby api
 > require 'itc'
 
 > agent = Itc::Agent.new("username", "password")
-> agent.update_app do |config|
-    config.app_id = new_app_id
-
+> agent.update_app(app_id) do |config|
     # Set review info
     config.review_info.email_address = "me@example.com"
     config.review_info.review_notes = "This is my app"
@@ -40,7 +38,25 @@ ITC Ruby api
   end
 ```
 
-## License :
+### Updating app screenshots / icon
+```ruby
+> require 'itc'
+
+> agent = Itc::Agent.new("username", "password")
+> agent.update_app(app_id) do |config|
+    if config.version_info.screenshots.ipad.length != 2
+        config.version_info.screenshots.ipad = ["/path/to/ipad1.jpg", "/path/to/ipad2.jpg"]
+    end
+    if config.version_info.screenshots.iphone5_5.length != 3
+        config.version_info.screenshots.iphone5_5 = ["/path/to/iphone5_5_1.jpg", "/path/to/iphone5_5_2.jpg", "/path/to/iphone5_5_3.jpg"]
+    end
+    if config.store_info.app_icon.empty?
+        config.store_info.app_icon = '/path/to/icon.jpg'
+    end
+  end
+```
+
+## License:
 
 The code is available at github [project][home] under [MIT license][license].
 

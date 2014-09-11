@@ -17,7 +17,6 @@ module Itc
       }
     end
 
-
     def update_app_data(config)
       review = config.review_info
       store = config.store_info
@@ -63,7 +62,7 @@ module Itc
               supportURL: v(version.support_url),
               marketingURL: v(version.marketing_url),
               privacyURL: v(version.privacy_url),
-              screenshots: v({}),
+              screenshots: v(screenshot_data(config)),
               appTrailers: {}
             }
           ]
@@ -97,7 +96,7 @@ module Itc
         newsstand: v(nil),
         copyright: v(nil),
         appVersionPageLinks: {},
-        largeAppIcon: {},
+        largeAppIcon: v(store.app_icon.to_itc_hash),
 
         eula: {
           EULATEXT: nil,
@@ -108,6 +107,15 @@ module Itc
           isRequired: false
         },
       }
+    end
+
+    def screenshot_data(config)
+      screenshots = {}
+      ScreenshotContainer::DEVICE_TYPES.each do |device|
+        itc_name = ScreenshotContainer::DEVICE_NAME_TO_ITC_NAME.fetch(device.to_s)
+        screenshots[itc_name] = v(config.version_info.screenshots.send(device).map{ |ss| v(ss.to_itc_hash) })
+      end
+      screenshots
     end
 
     def rating_hash(name, level)
