@@ -23,6 +23,8 @@ module Itc
 
     def post_image(url, parameters=[], headers={})
       ImageUploadResponse.new(@http_client.post(URI.join(IMAGE_BASE_URI, url), parameters, headers).body)
+    rescue Mechanize::ResponseCodeError => e
+      raise Mechanize::ResponseCodeError, e.page, e.page.body
     end
 
     def initialize(username, password)
@@ -55,10 +57,20 @@ module Itc
     def search_by_app_id(app_id)
       login unless @logged_in
       response = get("/WebObjects/iTunesConnect.woa/ra/apps/detail/#{app_id}")
-      unless reponse.errors
+      unless response.errors
         response.data
       end
+    rescue Mechanize::ResponseCodeError => e
+      false
     end
+
+    def find_app_store_url(app_id)
+      app_info = search_by_app_id(app_id)
+      if app_info
+        app_info.data["appPageMoreLinks"].find{ |h| h["text"] == "ITC.apps.versionLinks.AppStore" }["link"]
+      end
+    end
+
 
     def add_version(app_id, version)
       login unless @logged_in
@@ -147,7 +159,7 @@ module Itc
       correlation_key = "iOS App:AdamId=#{config.app_id}:Version=#{config.version_info.version_number}"
 
       headers = {
-        'Content-Type' => 'image/jpeg',
+        'Content-Type' => 'image/png',
         'X-Apple-Upload-ContentProviderId' => @content_provider_id,
         'X-Apple-Upload-itctoken' => @screenshot_token,
         'X-Apple-Upload-Correlation-Key' => correlation_key,

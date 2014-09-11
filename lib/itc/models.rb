@@ -20,7 +20,7 @@ module Itc
   end
 
   class AppStoreInfo
-    attr_accessor :app_icon, :verion, :primary_category, :secondary_category, :copyright
+    attr_accessor :app_icon, :primary_category, :secondary_category, :copyright
     attr_accessor :address_line1, :address_line2, :address_line3, :city_name, :state ,:country, :postal_code
     attr_accessor :email_address, :first_name, :last_name, :phone_number, :trade_name
     attr_accessor :should_display_in_store
@@ -65,6 +65,11 @@ module Itc
     attr_accessor *NON_BOOLEAN_RATINGS
     boolean_attr_accessor *BOOLEAN_RATINGS
 
+    def set_all_ratings_to(rating)
+      NON_BOOLEAN_RATINGS.each do |category|
+        send("#{category}=", rating)
+      end
+    end
   end
 
   class LocalizedVersionInfo
