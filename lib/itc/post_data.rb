@@ -68,8 +68,8 @@ module Itc
         },
         gameCenterSummary: {},
         name: v(version.name),
-        primaryCategory: v(store.primary_category),
-        secondaryCategory: v(store.secondary_category),
+        primaryCategory: v("MZGenre.#{store.primary_category}"),
+        secondaryCategory: v("MZGenre.#{store.secondary_category}"),
         version: v(version.version_number),
         ratings: {
           booleanDescriptors: (

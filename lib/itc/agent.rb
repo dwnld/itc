@@ -24,7 +24,7 @@ module Itc
     def post_image(url, parameters=[], headers={})
       ImageUploadResponse.new(@http_client.post(URI.join(IMAGE_BASE_URI, url), parameters, headers).body)
     rescue Mechanize::ResponseCodeError => e
-      raise Mechanize::ResponseCodeError, e.page, e.page.body
+      raise Mechanize::ResponseCodeError.new(e.page, e.page.body)
     end
 
     def initialize(username, password)
