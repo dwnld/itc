@@ -20,7 +20,7 @@ module Itc
       error_messages << sectionErrorKeys if sectionErrorKeys
       return if sectionErrorKeys.try(:first) =~ /You haven't made any changes./
       error_messages << @json['messages']['error'] if @json['messages'].try(:[], 'error').presence
-      error_messages
+      error_messages.presence
     end
 
   end

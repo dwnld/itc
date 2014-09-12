@@ -67,7 +67,7 @@ module Itc
     def find_app_store_url(app_id)
       app_info = search_by_app_id(app_id)
       if app_info
-        app_info.data["appPageMoreLinks"].find{ |h| h["text"] == "ITC.apps.versionLinks.AppStore" }["link"]
+        app_info["appPageMoreLinks"].find{ |h| h["text"] == "ITC.apps.versionLinks.AppStore" }["link"]
       end
     end
 
