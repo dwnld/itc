@@ -14,7 +14,6 @@ module Itc
     end
 
     def errors
-      # TODO Check which fields have a sectionErrorKey
       error_messages = []
       sectionErrorKeys = @data.try(:[], 'sectionErrorKeys').presence
       error_messages << sectionErrorKeys if sectionErrorKeys
