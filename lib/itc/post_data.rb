@@ -69,7 +69,7 @@ module Itc
         gameCenterSummary: {},
         name: v(version.name),
         primaryCategory: v("MZGenre.#{store.primary_category}"),
-        secondaryCategory: v("MZGenre.#{store.secondary_category}"),
+        secondaryCategory: v(store.secondary_category ? "MZGenre.#{store.secondary_category}" : nil),
         version: v(version.version_number),
         ratings: {
           booleanDescriptors: (
@@ -93,7 +93,7 @@ module Itc
         primaryLanguage: v(version.language),
         preReleaseBuildVersionString: v(nil),
         newsstand: v(nil),
-        copyright: v(nil),
+        copyright: v(store.copyright),
         appVersionPageLinks: {},
         largeAppIcon: v(store.app_icon.to_itc_hash),
 
