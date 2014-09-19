@@ -8,9 +8,9 @@ module Itc
       @data = @json['data']
     end
 
-    def raise_if_errors
+    def raise_if_errors(message=nil)
       error_messages = errors
-      raise ItunesError, error_messages if error_messages.present?
+      raise ItunesError, "#{message} #{error_messages}" if error_messages.present?
     end
 
     def errors
@@ -27,6 +27,7 @@ module Itc
 
     def sectionErrors
       errors = {}
+      return errors unless data
       data.each_with_parent do |parent, k, v|
         if k == 'errorKeys' && v.present?
           errors[parent] = v

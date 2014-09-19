@@ -47,11 +47,17 @@ module Itc
     end
 
     def search_by_sku(sku)
-      login unless @logged_in
-      response = get('/WebObjects/iTunesConnect.woa/ra/apps/manageyourapps/summary')
+      response = all_apps
       response.data['summaries'].find do |app_data|
         app_data['vendorId'] == sku
       end
+    end
+
+    def all_apps
+      login unless @logged_in
+      response = get('/WebObjects/iTunesConnect.woa/ra/apps/manageyourapps/summary')
+      response.raise_if_errors
+      response
     end
 
     def search_by_app_id(app_id)
@@ -106,6 +112,16 @@ module Itc
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/save/#{config.app_id}", data)
       response.raise_if_errors
       response.data
+    end
+
+    def developer_reject(sku)
+      login unless @logged_in
+      app_data = search_by_sku(sku)
+      raise "App not found: #{sku}" unless app_data
+      app_id = app_data['adamId']
+      response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/reject/#{app_id}")
+      response.raise_if_errors("Failed to reject #{sku}")
+      response
     end
 
     def set_current_screenshots(config)
