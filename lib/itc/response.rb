@@ -46,4 +46,62 @@ module Itc
   end
 
   class ItunesError < StandardError; end
+  class App
+    def initialize(itc_data)
+      @data = itc_data
+      @versions = itc_data['versions'].map{|v| AppVersion.new(v) }
+    end
+
+    def id
+      @data['adamId']
+    end
+
+    def name
+      @data['name']
+    end
+
+    def bundle_id
+      @data['bundleId']
+    end
+
+    def icon_url
+      @data['iconURL']
+    end
+
+    def last_modified
+      @data['lastModifiedDate']
+    end
+
+    def sku
+      @data['vendorId']
+    end
+
+    alias_method :vendor_id, :sku
+
+    def versions
+      @versions
+    end
+  end
+
+  class AppVersion
+    include Comparable
+    def initialize(itc_data)
+      @data = itc_data
+    end
+
+    def version
+      @data['version']
+    end
+
+    def state
+      @data['stateKey']
+    end
+
+    def <=>(other)
+      return 0 if self.version == other.version
+      return -1 unless Gem::Version.correct?(self.version)
+      return 1 unless Gem::Version.correct?(other.version)
+      Gem::Version.new(self.version) <=> Gem::Version.new(other.version)
+    end
+  end
 end

@@ -47,17 +47,15 @@ module Itc
     end
 
     def search_by_sku(sku)
-      response = all_apps
-      response.data['summaries'].find do |app_data|
-        app_data['vendorId'] == sku
-      end
+      apps = all_apps
+      apps.find { |app| app.sku == sku }
     end
 
     def all_apps
       login unless @logged_in
       response = get('/WebObjects/iTunesConnect.woa/ra/apps/manageyourapps/summary')
       response.raise_if_errors
-      response
+      response.data['summaries'].map{ |s| App.new(s) }
     end
 
     def search_by_app_id(app_id)
