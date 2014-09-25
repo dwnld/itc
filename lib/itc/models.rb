@@ -87,8 +87,9 @@ module Itc
     attr_accessor :should_update
 
     ITC_NAME_TO_DEVICE_NAME = {
-      '5.5-Inch' => 'iphone5_5',
-      '4.7-Inch' => 'iphone4_7',
+      # Way to be consistent, Apple
+      'iphone6Plus' => 'iphone5_5',
+      'iphone6' => 'iphone4_7',
       'ipad' => 'ipad',
       'iphone35' => 'iphone3_5',
       'iphone4' => 'iphone4'
