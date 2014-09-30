@@ -104,4 +104,34 @@ module Itc
       Gem::Version.new(self.version) <=> Gem::Version.new(other.version)
     end
   end
+
+  class CandidateBuild
+    def initialize(data)
+      @data = data
+    end
+
+    def build_version
+      @data['buildVersion']
+    end
+
+    def train_version
+      @data['trainVersion']
+    end
+
+    def upload_timestamp
+      @data['upload_timestamp']
+    end
+
+    def icon_url
+      @data['iconUrl']
+    end
+
+    def app_name
+      @data['app_name']
+    end
+
+    def state
+      @data['state']
+    end
+  end
 end

@@ -122,6 +122,13 @@ module Itc
       response
     end
 
+    def candidate_builds(app_id)
+      login unless @logged_in
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/version/candidateBuilds/#{app_id}")
+      response.raise_if_errors
+      response.data['builds'].map{|hash| CandidateBuild.new(hash)}
+    end
+
     def set_current_screenshots(config)
       app_data = get("/WebObjects/iTunesConnect.woa/ra/apps/version/#{config.app_id}")
       app_data.data['details']['value'].first['screenshots']['value'].each do |itc_name, screenshots|

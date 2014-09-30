@@ -72,6 +72,18 @@ Or install it yourself as:
   end
 ```
 
+### Uploading a build
+```ruby
+> require 'itc'
+
+> agent = Itc::Agent.new("username", "password")
+> builds = agent.candidate_builds(app_id)
+> build = builds.find{|b| b.build_version = "1" }
+> agent.update_app(app_id) do |config|
+    config.build_version = build
+  end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/dwnld/itc/fork )

@@ -1,12 +1,17 @@
 module Itc
   class AppConfiguration
-    attr_accessor :review_info, :store_info, :version_info, :ratings, :app_id
+    attr_accessor :review_info, :store_info, :version_info, :ratings, :app_id, :build_version
 
     def initialize
       @review_info = AppReviewInfo.new
       @store_info = AppStoreInfo.new
       @version_info = LocalizedVersionInfo.new
       @ratings = Ratings.new
+    end
+
+    def build_version=(build_version)
+      raise ArgumentError, 'build_version must be a CandidateBuild' unless build_version.is_a?(CandidateBuild)
+      @build_version = build_version
     end
   end
 

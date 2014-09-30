@@ -20,6 +20,8 @@ module Itc
       review = config.review_info
       store = config.store_info
       version = config.version_info
+      build = config.build_version
+      app_data =
       {
         appType: 'iOS App',
         appReviewInfo: {
@@ -106,6 +108,14 @@ module Itc
           isRequired: false
         },
       }
+      if build
+        app_data.merge({
+          preReleaseBuildVersionString: v(build.build_version),
+          preReleaseBuildTrainVersionString: build.train_version,
+          preReleaseBuildIconUrl: build.icon_url,
+          preReleaseBuildUploadDate: build.upload_timestamp
+        })
+      end
     end
 
     def screenshot_data(config)
