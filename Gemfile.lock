@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    itc (0.0.6)
+    itc (0.0.7)
       activesupport
       mechanize
 

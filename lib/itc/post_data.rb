@@ -116,6 +116,7 @@ module Itc
           preReleaseBuildUploadDate: build.upload_timestamp
         })
       end
+      app_data
     end
 
     def screenshot_data(config)
