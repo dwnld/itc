@@ -109,7 +109,7 @@ module Itc
         },
       }
       if build
-        app_data.merge({
+        app_data = app_data.merge({
           preReleaseBuildVersionString: v(build.build_version),
           preReleaseBuildTrainVersionString: build.train_version,
           preReleaseBuildIconUrl: build.icon_url,
