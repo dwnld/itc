@@ -71,7 +71,7 @@ module Itc
         gameCenterSummary: {},
         name: v(version.name),
         primaryCategory: v(localization.inverse[store.primary_category]),
-        secondaryCategory: v(store.secondary_category ? localization.inverse[store.secondary_category] : nil),
+        secondaryCategory: v(store.secondary_category.present? ? localization.inverse[store.secondary_category] : nil),
         version: v(version.version_number),
         ratings: {
           booleanDescriptors: (
