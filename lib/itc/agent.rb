@@ -70,9 +70,11 @@ module Itc
 
     def localization
       login unless @logged_in
-      response = get("/WebObjects/iTunesConnect.woa/ra/l10n")
-      response.raise_if_errors
-      Localization.new(response.data)
+      l10n_resp = get("/WebObjects/iTunesConnect.woa/ra/l10n")
+      l10n_resp.raise_if_errors
+      ref_resp = get("/WebObjects/iTunesConnect.woa/ra/ref")
+      ref_resp.raise_if_errors
+      Localization.new(l10n_resp.data, ref_resp.data)
     end
 
     def find_app_store_url(app_id)

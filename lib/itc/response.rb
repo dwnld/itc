@@ -136,12 +136,16 @@ module Itc
   end
 
   class Localization
-    def initialize(l10n)
-      @l10n = l10n
+    def initialize(l10n, ref_data)
+      if ref_data
+        @l10n = l10n.keep_if{ |k, v| k.in?(ref_data['iosgenres'])}
+      else
+        @l10n = l10n
+      end
     end
 
     def inverse
-      @inverse ||= Localization.new(@l10n.invert)
+      @inverse ||= Localization.new(@l10n.invert, nil)
     end
 
     def [](key)
