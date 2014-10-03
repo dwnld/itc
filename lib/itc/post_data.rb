@@ -16,7 +16,7 @@ module Itc
       }
     end
 
-    def update_app_data(config)
+    def update_app_data(config, localization)
       review = config.review_info
       store = config.store_info
       version = config.version_info
@@ -70,8 +70,8 @@ module Itc
         },
         gameCenterSummary: {},
         name: v(version.name),
-        primaryCategory: v("MZGenre.#{store.primary_category}"),
-        secondaryCategory: v(store.secondary_category ? "MZGenre.#{store.secondary_category}" : nil),
+        primaryCategory: v(localization.inverse[store.primary_category]),
+        secondaryCategory: v(store.secondary_category ? localization.inverse[store.secondary_category] : nil),
         version: v(version.version_number),
         ratings: {
           booleanDescriptors: (

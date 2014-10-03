@@ -68,13 +68,19 @@ module Itc
       false
     end
 
+    def localization
+      login unless @logged_in
+      response = get("/WebObjects/iTunesConnect.woa/ra/l10n")
+      response.raise_if_errors
+      Localization.new(response.data)
+    end
+
     def find_app_store_url(app_id)
       app_info = search_by_app_id(app_id)
       if app_info
         app_info["appPageMoreLinks"].find{ |h| h["text"] == "ITC.apps.versionLinks.AppStore" }["link"]
       end
     end
-
 
     def add_version(app_id, version)
       login unless @logged_in
@@ -97,7 +103,6 @@ module Itc
       response.data
     end
 
-
     def update_app(app_id)
       login unless @logged_in
       config = AppConfiguration.new
@@ -106,7 +111,7 @@ module Itc
       yield config
 
       update_screenshots(config)
-      data = update_app_data(config).to_json
+      data = update_app_data(config, localization).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/save/#{config.app_id}", data)
       response.raise_if_errors
       response.data

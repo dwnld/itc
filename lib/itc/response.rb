@@ -134,4 +134,19 @@ module Itc
       @data['state']
     end
   end
+
+  class Localization
+    def initialize(l10n)
+      @l10n = l10n
+    end
+
+    def inverse
+      @inverse ||= Localization.new(@l10n.invert)
+    end
+
+    def [](key)
+      raise ArgumentError, "No such key #{key}" unless @l10n[key].present?
+      @l10n[key]
+    end
+  end
 end
