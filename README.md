@@ -5,15 +5,12 @@ ITC Ruby api
 
 Add this line to your application's Gemfile:
 
-    gem 'itc'
+    gem 'itc', git: 'git://github.com/dwnld/itc.git'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install itc
 
 ## Usage
 
