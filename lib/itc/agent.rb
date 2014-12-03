@@ -31,6 +31,7 @@ module Itc
       @username = username
       @password = password
       @http_client = Mechanize.new
+      @http_client.keep_alive = false # Prevent connection resets from apple
     end
 
     def login
