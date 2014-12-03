@@ -91,7 +91,7 @@ module Itc
         secondarySecondSubCategory: v(nil),
         primaryFirstSubCategory: v(nil),
         primarySecondSubCategory: v(nil),
-        releaseOnApproval: v(nil),
+        releaseOnApproval: v(true),
         primaryLanguage: v(version.language),
         preReleaseBuildVersionString: v(nil),
         newsstand: v(nil),
