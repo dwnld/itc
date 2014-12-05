@@ -1,5 +1,6 @@
 require 'mechanize'
 require 'set'
+require 'httparty'
 require 'itc/post_data'
 require 'itc/response'
 require 'itc/models'
@@ -21,17 +22,21 @@ module Itc
       Response.new(e.page.body)
     end
 
-    def post_image(url, parameters=[], headers={})
-      ImageUploadResponse.new(@http_client.post(URI.join(IMAGE_BASE_URI, url), parameters, headers).body)
-    rescue Mechanize::ResponseCodeError => e
-      raise Mechanize::ResponseCodeError.new(e.page, e.page.body)
+    def post_image(url, body=nil, headers={})
+      full_url = URI.join(IMAGE_BASE_URI, url)
+      response = HTTParty.post(full_url, body: body, headers: headers, timeout: 60, ssl_version: :TLSv1)
+      if response.success?
+        ImageUploadResponse.new(response.body)
+      else
+        raise "Got error code #{response.code} for #{full_url} -- #{response.body}"
+      end
     end
 
     def initialize(username, password)
       @username = username
       @password = password
       @http_client = Mechanize.new
-      @http_client.keep_alive = false # Prevent connection resets from apple
+      @http_client.idle_timeout = 1 # Prevent connection resets from apple
     end
 
     def login
