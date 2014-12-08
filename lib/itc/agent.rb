@@ -23,12 +23,20 @@ module Itc
     end
 
     def post_image(url, body=nil, headers={})
+      tries ||= 3
       full_url = URI.join(IMAGE_BASE_URI, url)
       response = HTTParty.post(full_url, body: body, headers: headers, timeout: 60, ssl_version: :TLSv1)
       if response.success?
-        ImageUploadResponse.new(response.body)
+        return ImageUploadResponse.new(response.body)
       else
         raise "Got error code #{response.code} for #{full_url} -- #{response.body}"
+      end
+    rescue Timeout::Error
+      tries -= 1
+      if tries > 0
+        retry
+      else
+        raise
       end
     end
 
