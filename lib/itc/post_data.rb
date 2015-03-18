@@ -138,7 +138,10 @@ module Itc
 
     def v(value)
       {
-        value: value
+        value: value,
+        isEditable: true,
+        isRequired: false,
+        errorKeys: nil
       }
     end
 
