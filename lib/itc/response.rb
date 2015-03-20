@@ -18,6 +18,7 @@ module Itc
       sectionErrorKeys = @data.try(:[], 'sectionErrorKeys').presence
       error_messages << sectionErrorKeys if sectionErrorKeys
       return if sectionErrorKeys.try(:first) =~ /You haven't made any changes./
+      return if sectionErrorKeys.try(:first) =~ /App Review has rejected this app/
       error_messages << @json['messages']['error'] if @json['messages'].try(:[], 'error').presence
       if error_messages.presence
         error_messages << sectionErrors
