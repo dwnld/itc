@@ -153,7 +153,7 @@ module Itc
     def set_current_screenshots(config)
       app_data = get("/WebObjects/iTunesConnect.woa/ra/apps/version/#{config.app_id}")
       app_data.data['details']['value'].first['screenshots']['value'].each do |itc_name, screenshots|
-        next if itc_name == 'desktop'
+        next if %(desktop watch).include?(itc_name)
         device = ScreenshotContainer::ITC_NAME_TO_DEVICE_NAME.fetch(itc_name)
         screenshots = screenshots['value']
         config.version_info.screenshots.send("#{device}=", screenshots.map{|s| Screenshot.from_itc(s['value'])})
