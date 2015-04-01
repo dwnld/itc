@@ -63,7 +63,6 @@ module Itc
               supportURL: v(version.support_url),
               marketingURL: v(version.marketing_url),
               privacyURL: v(version.privacy_url),
-              #screenshots: v(screenshot_data(config).merge(watch: v([]))),
               screenshots: v(screenshot_data(config)),
               appTrailers: {}
             }
