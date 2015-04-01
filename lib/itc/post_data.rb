@@ -63,6 +63,7 @@ module Itc
               supportURL: v(version.support_url),
               marketingURL: v(version.marketing_url),
               privacyURL: v(version.privacy_url),
+              #screenshots: v(screenshot_data(config).merge(watch: v([]))),
               screenshots: v(screenshot_data(config)),
               appTrailers: {}
             }
@@ -107,6 +108,32 @@ module Itc
           isEmptyValue: true,
           isRequired: false
         },
+        watchAppIcon: {
+          errorKeys: nil,
+          isEditable: true,
+          isRequired: false,
+          value: {
+            assetToken: nil,
+            originalFileName: nil,
+            sortOrder: nil,
+            thumbNailUrl: nil,
+            thumbnailAssetToken: nil,
+            url: nil
+          }
+        },
+        bundleInfo: {
+          supportsAppleWatch: false
+        },
+        transitAppFile: {
+          value: nil,
+          isEditable: true,
+          isRequired: false,
+          errorKeys: nil
+        },
+        canBetaTest: true,
+        canPrepareForUpload: true,
+        canRejectVersion: false,
+        canSendVersionLive: false,
       }
       if build
         app_data = app_data.merge({
