@@ -107,6 +107,32 @@ module Itc
           isEmptyValue: true,
           isRequired: false
         },
+        watchAppIcon: {
+          errorKeys: nil,
+          isEditable: true,
+          isRequired: false,
+          value: {
+            assetToken: nil,
+            originalFileName: nil,
+            sortOrder: nil,
+            thumbNailUrl: nil,
+            thumbnailAssetToken: nil,
+            url: nil
+          }
+        },
+        bundleInfo: {
+          supportsAppleWatch: false
+        },
+        transitAppFile: {
+          value: nil,
+          isEditable: true,
+          isRequired: false,
+          errorKeys: nil
+        },
+        canBetaTest: true,
+        canPrepareForUpload: true,
+        canRejectVersion: false,
+        canSendVersionLive: false,
       }
       if build
         app_data = app_data.merge({
