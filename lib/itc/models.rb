@@ -87,7 +87,7 @@ module Itc
   end
 
   class ScreenshotContainer
-    DEVICE_TYPES = [:iphone4_7, :iphone5_5, :iphone4, :iphone3_5, :ipad]
+    DEVICE_TYPES = [:iphone4_7, :iphone5_5, :iphone4, :iphone3_5, :ipad, :watch]
     attr_reader *DEVICE_TYPES
     attr_accessor :should_update
 
@@ -97,7 +97,8 @@ module Itc
       'iphone6' => 'iphone4_7',
       'ipad' => 'ipad',
       'iphone35' => 'iphone3_5',
-      'iphone4' => 'iphone4'
+      'iphone4' => 'iphone4',
+      'watch' => 'watch'
     }
 
     DEVICE_NAME_TO_ITC_NAME = ITC_NAME_TO_DEVICE_NAME.invert

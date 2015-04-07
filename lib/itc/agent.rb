@@ -125,7 +125,6 @@ module Itc
       config.app_id = app_id
       set_current_screenshots(config)
       yield config
-
       update_screenshots(config)
       data = update_app_data(config, localization).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/save/#{config.app_id}", data)
