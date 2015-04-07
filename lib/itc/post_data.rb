@@ -119,6 +119,76 @@ module Itc
       app_data
     end
 
+    def submit_for_review_data(config)
+      submit_review_data =
+      {
+        exportCompliance: {
+          sectionErrorKeys: [],
+          sectionInfoKeys: [],
+          sectionWarningKeys: [],
+          usesEncryption: nil,
+          encryptionUpdated: nil,
+          isExempt: nil,
+          containsProprietaryCryptography: nil,
+          containsThirdPartyCryptography: nil,
+          availableOnFrenchStore: nil,
+          ccatFile: nil,
+          appType: 'iOS App',
+          exportComplianceRequired: false
+        },
+        contentRights: {
+          containsThirdPartyContent: {
+            value: 'false'
+          }
+        },
+        adIdInfo: {
+          sectionErrorKeys: [],
+          sectionInfoKeys: [],
+          sectionWarningKeys: [],
+          usesIdfa: {
+            value: 'false',
+            isEditable: false,
+            isRequired: true,
+            errorKeys: nil
+          },
+          servesAds: {
+            value: nil,
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          tracksInstall: {
+            value: nil,
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          tracksAction: {
+            value: nil,
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          limitsTracking: {
+            value: nil,
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          }
+        },
+        previousPurchaseRestrictions: {
+          significantIssue: {
+            value: nil,
+            isEditable: false,
+            isRequired: true,
+            errorKeys: nil
+          },
+          previousVersions: []
+        }
+      }
+      submit_review_data
+    end
+
     def screenshot_data(config)
       screenshots = {}
       ScreenshotContainer::DEVICE_TYPES.each do |device|
