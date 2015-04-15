@@ -21,9 +21,167 @@ module Itc
       store = config.store_info
       version = config.version_info
       build = config.build_version
-      app_data =
-      {
+      app_data = {
+        sectionErrorKeys: [],
+        sectionInfoKeys: [],
+        sectionWarningKeys: [],
+        name: v(version.name, true, true),
+        primaryLanguage: v('English', true, true),
+        version: v(version.version_number, true, true),
+        copyright: v(store.copyright),
+        primaryCategory: v(localization.inverse[store.primary_category]),
+        primaryFirstSubCategory: v(nil),
+        primarySecondSubCategory: v(nil),
+        secondaryCategory: v(store.secondary_category.present? ? localization.inverse[store.secondary_category] : nil),
+        secondaryFirstSubCategory: v(nil),
+        secondarySecondSubCategory: v(nil),
+        submittableAddOns: nil,
+        newsstand: {
+          isEnabled: false,
+          isEditable: true,
+          errorKeys: nil,
+          isRequired: false,
+          picture: {
+            value: {
+              assetToken: nil,
+              url: nil,
+              thumbNailUrl: nil,
+              sortOrder: nil,
+              originalFileName: nil
+            },
+            isEditable: true,
+            isRequired: false,
+            errorKeys: nil
+          },
+          pictureEmptyValue: true,
+          isEmptyValue: false
+        },
+        gameCenterSummary: {
+          leaderboards: {
+            value: [],
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          displaySets: {
+            value: [],
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          achievements: {
+            value: [],
+            isEditable: false,
+            isRequired: false,
+            errorKeys: nil
+          },
+          versionCompatibility: {
+            value: [],
+            isEditable: true,
+            isRequired: false,
+            errorKeys: nil
+          },
+          usedLeaderboards: 0,
+          maxLeaderboards: 100,
+          usedLeaderboardSets: 0,
+          maxLeaderboardSets: 100,
+          usedAchievementPoints: 0,
+          maxAchievementPoints: 1000,
+          isEnabled: false,
+          isEditable: false,
+          errorKeys: [],
+          isRequired: false,
+          isEmptyValue: false
+        },
+        canSendVersionLive: false,
+        canPrepareForUpload: true,
+        canRejectVersion: false,
+        status: 'prepareForUpload',
         appType: 'iOS App',
+        platform: 'ios',
+        ratings: {
+          booleanDescriptors: (
+            Ratings::BOOLEAN_RATINGS.map do |rating|
+              rating_hash(rating, config.ratings.send(rating))
+            end
+          ),
+          nonBooleanDescriptors: (
+            Ratings::NON_BOOLEAN_RATINGS.map do |rating|
+              rating_hash(rating, config.ratings.send(rating))
+            end
+          ),
+          ageBand: nil,
+          allRatingLevels: [
+            'ITC.apps.ratings.level.YES',
+            'ITC.apps.ratings.level.NO',
+            'ITC.apps.ratings.level.NONE',
+            'ITC.apps.ratings.level.INFREQUENT_MILD',
+            'ITC.apps.ratings.level.FREQUENT_INTENSE'
+          ],
+          rating: nil,
+          isEditable: true,
+          isRequired: false,
+          errorKeys: nil,
+          countryRatings: {},
+          isEmptyValue: false
+        },
+        details: {
+          value: [
+            {
+              sectionErrorKeys: [],
+              sectionInfoKeys: [],
+              sectionWarningKeys: [],
+              description: v(version.description),
+              language: version.language,
+              releaseNotes: v(version.release_notes, false, false),
+              keywords: v(version.keywords),
+              name: v(version.name, true, true),
+              screenshots: v(screenshot_data(config)),
+              appTrailers: {
+                value: {
+                  iphone4: v(nil),
+                  watch: v(nil),
+                  iphone35: v(nil),
+                  iphone6: v(nil),
+                  ipad: v(nil),
+                  iphone6Plus: v(nil)
+                },
+                isEditable: true,
+                isRequired: false,
+                errorKeys: nil
+              },
+              supportURL: v(version.support_url),
+              marketingURL: v(version.marketing_url),
+              privacyURL: v(version.privacy_url),
+              pageLanguageValue: version.language
+            }
+          ],
+          isEditable: true,
+          isRequired: true,
+          errorKeys: nil
+        },
+        transitAppFile: v(nil),
+        eula: {
+          countries: [],
+          isEditable: true,
+          isRequired: false,
+          errorKeys: nil,
+          isEmptyValue: true,
+          EULAText: nil
+        },
+        largeAppIcon: v(store.app_icon.to_itc_hash),
+        watchAppIcon: {
+          value: {
+            assetToken: nil,
+            url: nil,
+            thumbNailUrl: nil,
+            sortOrder: nil,
+            originalFileName: nil
+          },
+          isEditable: true,
+          isRequired: false,
+          errorKeys: nil
+        },
         appReviewInfo: {
           emailAddress: v(review.email_address),
           entitlementUsages: v(review.entitlement_usages),
@@ -47,92 +205,24 @@ module Itc
           lastName: v(store.last_name),
           phoneNumber: v(store.phone_number),
           tradeName: v(store.trade_name),
-          shouldDisplayInStore: v(store.should_display_in_store)
+          shouldDisplayInStore: v(store.should_display_in_store),
+          appRegInfo: nil
         },
-        details: {
-          isRequired: true,
-          isEditable: true,
-          value: [
-            {
-              description: v(version.description),
-              keywords: v(version.keywords),
-              releaseNotes: v(version.release_notes),
-              name: v(version.name),
-              language: version.language,
-              pageLanguageValue: version.language,
-              supportURL: v(version.support_url),
-              marketingURL: v(version.marketing_url),
-              privacyURL: v(version.privacy_url),
-              screenshots: v(screenshot_data(config)),
-              appTrailers: {}
-            }
-          ]
-        },
-        gameCenterSummary: {},
-        name: v(version.name),
-        primaryCategory: v(localization.inverse[store.primary_category]),
-        secondaryCategory: v(store.secondary_category.present? ? localization.inverse[store.secondary_category] : nil),
-        version: v(version.version_number),
-        ratings: {
-          booleanDescriptors: (
-            Ratings::BOOLEAN_RATINGS.map do |rating|
-              rating_hash(rating, config.ratings.send(rating))
-            end
-          ),
-          nonBooleanDescriptors: (
-            Ratings::NON_BOOLEAN_RATINGS.map do |rating|
-              rating_hash(rating, config.ratings.send(rating))
-            end
-          ),
-          isEditable: true
-        },
-
-        secondaryFirstSubCategory: v(nil),
-        secondarySecondSubCategory: v(nil),
-        primaryFirstSubCategory: v(nil),
-        primarySecondSubCategory: v(nil),
-        releaseOnApproval: v(true),
-        primaryLanguage: v(version.language),
+        appVersionPageLinks: { },
         preReleaseBuildVersionString: v(nil),
-        newsstand: v(nil),
-        copyright: v(store.copyright),
-        appVersionPageLinks: {},
-        largeAppIcon: v(store.app_icon.to_itc_hash),
-
-        eula: {
-          EULATEXT: nil,
-          countries: [],
-          errorKeys: [],
-          isEditable: true,
-          isEmptyValue: true,
-          isRequired: false
-        },
-        watchAppIcon: {
-          errorKeys: nil,
-          isEditable: true,
-          isRequired: false,
-          value: {
-            assetToken: nil,
-            originalFileName: nil,
-            sortOrder: nil,
-            thumbNailUrl: nil,
-            thumbnailAssetToken: nil,
-            url: nil
-          }
-        },
+        preReleaseBuildTrainVersionString: nil,
+        preReleaseBuildIconUrl: nil,
+        preReleaseBuildUploadDate: 0,
+        preReleaseBuildsAreAvailable: false,
+        preReleaseBuildIsLegacy: false,
+        canBetaTest: true,
+        isSaveError: false,
+        validationError: false,
+        releaseOnApproval: v(true),
         bundleInfo: {
           supportsAppleWatch: false
         },
-        transitAppFile: {
-          value: nil,
-          isEditable: true,
-          isRequired: false,
-          errorKeys: nil
-        },
-        canBetaTest: true,
-        canPrepareForUpload: true,
-        canRejectVersion: false,
-        canSendVersionLive: false,
+        autoReleaseDate: v(nil)
       }
       if build
         app_data = app_data.merge({
@@ -162,14 +252,13 @@ module Itc
       }
     end
 
-    def v(value)
+    def v(value, is_editable = true, is_required = false)
       {
         value: value,
-        isEditable: true,
-        isRequired: false,
+        isEditable: is_editable,
+        isRequired: is_required,
         errorKeys: nil
       }
     end
-
   end
 end
