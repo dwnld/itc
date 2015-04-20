@@ -98,17 +98,27 @@ module Itc
       end
     end
 
-    def add_version(app_id, version)
+    def app_details(app_id)
       login unless @logged_in
       response = get("/WebObjects/iTunesConnect.woa/ra/apps/detail/#{app_id}")
-      if response.data['canAddVersion']
-        data = {version: version}.to_json
-        post_response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/create/#{app_id}", data)
-        response.raise_if_errors
-        response
-      else
-        raise "Cannot add version"
-      end
+      response.raise_if_errors
+      response.data
+    end
+
+    def can_update_version?(app_details)
+      return true if app_details['liveVersion']['state'] == 'prepareForUpload'
+    end
+
+    def can_add_version?(app_details)
+      return app_details['canAddVersion']
+    end
+
+    def add_version(app_id, version)
+      login unless @logged_in
+      data = {version: version}.to_json
+      post_response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/create/#{app_id}", data)
+      post_response.raise_if_errors
+      post_response
     end
 
     def create_app(name, version, bundle_id, vendor_id)
@@ -129,6 +139,7 @@ module Itc
       data = update_app_data(config, localization).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/save/#{config.app_id}", data)
       response.raise_if_errors
+      puts "Finished updating app"
       response.data
     end
 
