@@ -238,6 +238,7 @@ module Itc
     def submit_for_review_data(config)
       submit_review_data =
       {
+        versionInfo: nil,
         exportCompliance: {
           sectionErrorKeys: [],
           sectionInfoKeys: [],
@@ -254,51 +255,24 @@ module Itc
         },
         contentRights: {
           containsThirdPartyContent: {
-            value: 'false'
+            value: 'true'
+          },
+          hasRights: {
+            value: 'true'
           }
         },
         adIdInfo: {
           sectionErrorKeys: [],
           sectionInfoKeys: [],
           sectionWarningKeys: [],
-          usesIdfa: {
-            value: 'false',
-            isEditable: false,
-            isRequired: true,
-            errorKeys: nil
-          },
-          servesAds: {
-            value: nil,
-            isEditable: false,
-            isRequired: false,
-            errorKeys: nil
-          },
-          tracksInstall: {
-            value: nil,
-            isEditable: false,
-            isRequired: false,
-            errorKeys: nil
-          },
-          tracksAction: {
-            value: nil,
-            isEditable: false,
-            isRequired: false,
-            errorKeys: nil
-          },
-          limitsTracking: {
-            value: nil,
-            isEditable: false,
-            isRequired: false,
-            errorKeys: nil
-          }
+          usesIdfa: v('true', false, true),
+          servesAds: v(nil, false, false),
+          tracksInstall: v(true, false, false),
+          tracksAction: v(nil, false, false),
+          limitsTracking: v(true, false, false)
         },
         previousPurchaseRestrictions: {
-          significantIssue: {
-            value: nil,
-            isEditable: false,
-            isRequired: true,
-            errorKeys: nil
-          },
+          significantIssue: v(nil, false, true),
           previousVersions: []
         }
       }
