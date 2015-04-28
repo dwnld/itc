@@ -235,6 +235,50 @@ module Itc
       app_data
     end
 
+    def submit_for_review_data(config)
+      submit_review_data =
+      {
+        versionInfo: nil,
+        exportCompliance: {
+          sectionErrorKeys: [],
+          sectionInfoKeys: [],
+          sectionWarningKeys: [],
+          usesEncryption: nil,
+          encryptionUpdated: nil,
+          isExempt: nil,
+          containsProprietaryCryptography: nil,
+          containsThirdPartyCryptography: nil,
+          availableOnFrenchStore: nil,
+          ccatFile: nil,
+          appType: 'iOS App',
+          exportComplianceRequired: false
+        },
+        contentRights: {
+          containsThirdPartyContent: {
+            value: 'true'
+          },
+          hasRights: {
+            value: 'true'
+          }
+        },
+        adIdInfo: {
+          sectionErrorKeys: [],
+          sectionInfoKeys: [],
+          sectionWarningKeys: [],
+          usesIdfa: v('true', false, true),
+          servesAds: v(nil, false, false),
+          tracksInstall: v(true, false, false),
+          tracksAction: v(nil, false, false),
+          limitsTracking: v(true, false, false)
+        },
+        previousPurchaseRestrictions: {
+          significantIssue: v(nil, false, true),
+          previousVersions: []
+        }
+      }
+      submit_review_data
+    end
+
     def screenshot_data(config)
       screenshots = {}
       ScreenshotContainer::DEVICE_TYPES.each do |device|
