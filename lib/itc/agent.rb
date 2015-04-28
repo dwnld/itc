@@ -144,12 +144,13 @@ module Itc
     end
 
     def submit_for_review(app_id)
+      puts "Submitting App #{app_id} for Review"
       login unless @logged_in
       config = AppConfiguration.new
       config.app_id = app_id
       data = submit_for_review_data(config).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/#{config.app_id}/version/submit/complete", data)
-      response.raise_if_errors
+      response.raise_if_errors("Failed to submit for review app with id: #{app_id}")
       response.data
     end
 
