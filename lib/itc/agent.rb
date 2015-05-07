@@ -166,7 +166,9 @@ module Itc
 
     def candidate_builds(app_id)
       login unless @logged_in
-      response = get("/WebObjects/iTunesConnect.woa/ra/apps/version/candidateBuilds/#{app_id}")
+      app_data = get("/WebObjects/iTunesConnect.woa/ra/apps/version/#{app_id}")
+      itunes_app_version = app_data.data.fetch('versionId')
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/versions/#{itunes_app_version}/candidateBuilds")
       response.raise_if_errors
       response.data['builds'].map{|hash| CandidateBuild.new(hash)}
     end
