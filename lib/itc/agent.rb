@@ -242,6 +242,14 @@ module Itc
       screenshot.sort_order = sort_order
       screenshot.url = nil
     end
+    
+    def generate_daily_iad_csv_report(date, publisher_id, parameters=[], referer=nil, headers={})
+      login unless @logged_in
+      report_url = 'https://iad.apple.com/itcportal/generatecsv?' \
+        "pageName=app_homepage&dashboardType=publisher&publisherId=#{publisher_id}&dateRange=oneDay" \
+        "&searchTerms=Search%20Apps&adminFlag=false&fromDate=#{date.strftime('%m/%d/%y')}&toDate=&dataType=byName"
+      @http_client.get(report_url, parameters, referer, headers)
+    end
   end
 
 end
