@@ -236,22 +236,22 @@ module Itc
     end
 
     def submit_for_review_data(config)
-      submit_review_data =
       {
         versionInfo: nil,
         exportCompliance: {
           sectionErrorKeys: [],
           sectionInfoKeys: [],
           sectionWarningKeys: [],
-          usesEncryption: nil,
-          encryptionUpdated: nil,
-          isExempt: nil,
-          containsProprietaryCryptography: nil,
-          containsThirdPartyCryptography: nil,
-          availableOnFrenchStore: nil,
-          ccatFile: nil,
+          usesEncryption: v(''),
+          encryptionUpdated: v(false),
+          isExempt: v(''),
+          containsProprietaryCryptography: v(''),
+          containsThirdPartyCryptography: v(''),
+          availableOnFrenchStore: v(''),
+          ccatFile: v(nil),
           appType: 'iOS App',
-          exportComplianceRequired: false
+          platform: 'ios',
+          exportComplianceRequired: true
         },
         contentRights: {
           containsThirdPartyContent: {
@@ -276,7 +276,6 @@ module Itc
           previousVersions: []
         }
       }
-      submit_review_data
     end
 
     def screenshot_data(config)
