@@ -235,8 +235,9 @@ module Itc
       app_data
     end
 
-    def submit_for_review_data(config)
-      {
+    def submit_for_review_data(config, first_submit)
+      puts "first_submit: #{first_submit}"
+      submit_data = {
         versionInfo: nil,
         exportCompliance: {
           sectionErrorKeys: [],
@@ -276,6 +277,14 @@ module Itc
           previousVersions: []
         }
       }
+      if first_submit
+        submit_data[:exportCompliance][:usesEncryption] = v('false')
+        submit_data[:exportCompliance][:encryptionUpdated] = nil
+        submit_data[:contentRights][:containsThirdPartyContent] = v('true')
+        submit_data[:contentRights][:hasRights] = v('true')
+        submit_data[:previousPurchaseRestrictions] = nil
+      end
+      submit_data
     end
 
     def screenshot_data(config)

@@ -148,7 +148,8 @@ module Itc
       login unless @logged_in
       config = AppConfiguration.new
       config.app_id = app_id
-      data = submit_for_review_data(config).to_json
+      app_data = app_details(app_id)
+      data = submit_for_review_data(config, app_data['inFlightVersion'].nil?).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/#{config.app_id}/version/submit/complete", data)
       response.raise_if_errors("Failed to submit for review app with id: #{app_id}")
       response.data
@@ -242,7 +243,7 @@ module Itc
       screenshot.sort_order = sort_order
       screenshot.url = nil
     end
-    
+
     def generate_daily_iad_csv_report(date, publisher_id, parameters=[], referer=nil, headers={})
       login unless @logged_in
       report_url = 'https://iad.apple.com/itcportal/generatecsv?' \
