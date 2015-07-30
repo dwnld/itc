@@ -251,6 +251,18 @@ module Itc
         "&searchTerms=Search%20Apps&adminFlag=false&fromDate=#{date.strftime('%m/%d/%y')}&toDate=&dataType=byName"
       @http_client.get(report_url, parameters, referer, headers)
     end
+
+    def app_status_counts
+      apps = all_apps
+      status_counts = {}
+      apps.each do |app|
+        app.versions.each do |version|
+          status_count = status_counts.fetch(version.state, 0)
+          status_counts[version.state] = status_count + 1
+        end
+      end
+      status_counts
+    end
   end
 
 end
