@@ -143,6 +143,15 @@ module Itc
       }
     end
 
+    def to_icon_hash
+      {
+        assetToken: asset_token,
+        fullSizeUrl: nil,
+        thumbNailUrl: nil,
+        url: url
+      }
+    end
+
     def empty?
       asset_token.empty?
     end
