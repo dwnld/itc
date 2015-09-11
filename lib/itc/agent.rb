@@ -105,6 +105,13 @@ module Itc
       response.data
     end
 
+    def app_version_details(app_id)
+      login unless @logged_in
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/version/#{app_id}")
+      response.raise_if_errors
+      response.data
+    end
+
     def can_update_version?(app_details)
       return true if app_details['liveVersion']['state'] == 'prepareForUpload'
     end
