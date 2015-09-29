@@ -132,9 +132,9 @@ module Itc
       post_response
     end
 
-    def create_app(name, version, bundle_id, vendor_id)
+    def create_app(name, version, bundle_id, vendor_id, company_name)
       login unless @logged_in
-      data = create_app_data(name, version, bundle_id, vendor_id).to_json
+      data = create_app_data(name, version, bundle_id, vendor_id, company_name).to_json
       response = post("/WebObjects/iTunesConnect.woa/ra/apps/create/v2/", data)
       response.raise_if_errors
       response.data

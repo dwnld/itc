@@ -2,12 +2,12 @@ require 'itc/models'
 
 module Itc
   module PostData
-    def create_app_data(name, version, bundle_id, vendor_id)
+    def create_app_data(name, version, bundle_id, vendor_id, company_name)
       {
         sectionErrorKeys: [],
         sectionInfoKeys: [],
         sectionWarningKeys: [],
-        companyName: v('DWNLD, Inc.', false, false),
+        companyName: v(company_name, false, false),
         versionString: nil,
         appRegInfo: nil,
         bundleIds: {},
