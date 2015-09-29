@@ -2,17 +2,48 @@ require 'itc/models'
 
 module Itc
   module PostData
-    def create_app_data(name, version, bundle_id, vendor_id)
+    def create_app_data(name, version, bundle_id, vendor_id, company_name)
       {
+        sectionErrorKeys: [],
+        sectionInfoKeys: [],
+        sectionWarningKeys: [],
+        companyName: v(company_name, false, false),
+        versionString: nil,
+        appRegInfo: nil,
+        bundleIds: {},
+        enabledPlatformsForCreation: v(['ios'], true, true),
+        name: nil,
+        primaryLanguage: v(nil, true, true),
+        bundleId: v(nil, true, true),
+        bundleIdSuffix: v(nil, true, true),
+        vendorId: nil,
+        initialPlatform: 'ios',
+        adamId: nil,
         newApp: {
-          appType: 'iOS App',
-          bundleId: v(bundle_id),
-          bundleIdSuffix: v(nil),
-          name: v(name),
-          primaryLanguage: v('English'),
-          vendorId: v(vendor_id),
-        },
-        versionString: v(version),
+          sectionErrorKeys: [],
+          sectionInfoKeys: [],
+          sectionWarningKeys: [],
+          bundleId: v(bundle_id, true, true),
+          bundleIdSuffix: v(nil, true, true),
+          vendorId: {
+            value: vendor_id
+          },
+          adamId: nil,
+          appType: 'ios',
+          name: {
+            value: name
+          },
+          liveVersion: nil,
+          inFlightVersion: nil,
+          primaryLanguage: v('English', true, true),
+          canAddVersion: false,
+          appPageSectionLinks: nil,
+          appPageMoreLinks: nil,
+          appPageActionLinks: nil,
+          appTransferState: nil,
+          isDeleted: false,
+          bundleSummaryInfo: nil
+        }
       }
     end
 

@@ -67,14 +67,14 @@ module Itc
 
     def all_apps
       login unless @logged_in
-      response = get('/WebObjects/iTunesConnect.woa/ra/apps/manageyourapps/summary')
+      response = get('/WebObjects/iTunesConnect.woa/ra/apps/manageyourapps/summary/v2')
       response.raise_if_errors
       response.data['summaries'].map{ |s| App.new(s) }
     end
 
     def search_by_app_id(app_id)
       login unless @logged_in
-      response = get("/WebObjects/iTunesConnect.woa/ra/apps/detail/#{app_id}")
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/details")
       unless response.errors
         response.data
       end
@@ -100,7 +100,7 @@ module Itc
 
     def app_details(app_id)
       login unless @logged_in
-      response = get("/WebObjects/iTunesConnect.woa/ra/apps/detail/#{app_id}")
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/details")
       response.raise_if_errors
       response.data
     end
@@ -122,16 +122,20 @@ module Itc
 
     def add_version(app_id, version)
       login unless @logged_in
-      data = {version: version}.to_json
-      post_response = post("/WebObjects/iTunesConnect.woa/ra/apps/version/create/#{app_id}", data)
+      data = {
+        version: {
+          value: version
+        }
+      }.to_json
+      post_response = post("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/platforms/ios/versions/create/", data)
       post_response.raise_if_errors
       post_response
     end
 
-    def create_app(name, version, bundle_id, vendor_id)
+    def create_app(name, version, bundle_id, vendor_id, company_name)
       login unless @logged_in
-      data = create_app_data(name, version, bundle_id, vendor_id).to_json
-      response = post("/WebObjects/iTunesConnect.woa/ra/apps/create/?appType=ios", data)
+      data = create_app_data(name, version, bundle_id, vendor_id, company_name).to_json
+      response = post("/WebObjects/iTunesConnect.woa/ra/apps/create/v2/", data)
       response.raise_if_errors
       response.data
     end
