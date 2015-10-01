@@ -107,7 +107,14 @@ module Itc
 
     def app_version_details(app_id)
       login unless @logged_in
-      response = get("/WebObjects/iTunesConnect.woa/ra/apps/version/#{app_id}")
+      overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
+      overview_response.raise_if_errors
+      # Get the live version
+      version_id = overview_response.data['platforms'].first['inFlightVersion']['id']
+
+      raise "Unable to get live version id for app_id #{app_id}" unless version_id
+
+      response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/platforms/ios/versions/#{version_id}")
       response.raise_if_errors
       response.data
     end
