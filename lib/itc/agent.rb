@@ -92,10 +92,10 @@ module Itc
     end
 
     def find_app_store_url(app_id)
-      app_info = search_by_app_id(app_id)
-      if app_info
-        app_info["appPageMoreLinks"].find{ |h| h["text"] == "ITC.apps.versionLinks.AppStore" }["link"]
-      end
+      login unless @logged_in
+      overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
+      overview_response.raise_if_errors
+      overview_response.data['appStoreUrl']
     end
 
     def app_details(app_id)
