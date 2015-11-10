@@ -82,6 +82,13 @@ module Itc
       false
     end
 
+    def app_overview(app_id)
+      login unless @logged_in
+      overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
+      overview_response.raise_if_errors
+      overview_response.data
+    end
+
     def localization
       login unless @logged_in
       l10n_resp = get("/WebObjects/iTunesConnect.woa/ra/l10n")
