@@ -47,6 +47,13 @@ module Itc
       @http_client.idle_timeout = 1 # Prevent connection resets from apple
     end
 
+    def service_key
+      return @service_key if @service_key
+      # We need a service key from a JS file to properly auth
+      js = @http_client.get('https://itunesconnect.apple.com/itc/static-resources/controllers/login_cntrl.js')
+      @service_key ||= js.body.match(/itcServiceKey = '(.*)'/)[1]
+    end
+
     def login
       data = {
         accountName: @username,
