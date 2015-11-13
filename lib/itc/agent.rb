@@ -48,16 +48,19 @@ module Itc
     end
 
     def login
-      # TODO Don't select by name in case apple changes
-      login_page = @http_client.get(BASE_URI)
-      login_form = login_page.form('appleConnectForm')
-      login_form.theAccountName = @username
-      login_form.theAccountPW = @password
-      response = @http_client.submit(login_form)
-      unless response.search('h2:contains("Sign In to iTunes Connect")').empty?
+      data = {
+        accountName: @username,
+        password:    @password,
+        rememberMe:  true
+      }
+      response = @http_client.post("https://idmsa.apple.com/appleauth/auth/signin?widgetKey=#{service_key}", data.to_json, {'Content-Type' => 'application/json'})
+      if response['Set-Cookie'] =~ /myacinfo=(\w+);/
+        @http_client.get('https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/route?noext')
+        @http_client.get('https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa')
+        @logged_in = true
+      else
         raise "Failed to sign into iTunes Connect"
       end
-      @logged_in = true
     end
 
     def search_by_sku(sku)
