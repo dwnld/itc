@@ -95,7 +95,6 @@ module Itc
     def app_overview(app_id)
       login unless @logged_in
       overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
-      overview_response.raise_if_errors
       overview_response.data
     end
 
@@ -111,7 +110,6 @@ module Itc
     def find_app_store_url(app_id)
       login unless @logged_in
       overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
-      overview_response.raise_if_errors
       overview_response.data['appStoreUrl']
     end
 
@@ -125,7 +123,6 @@ module Itc
     def app_version_details(app_id)
       login unless @logged_in
       overview_response = get("/WebObjects/iTunesConnect.woa/ra/apps/#{app_id}/overview")
-      overview_response.raise_if_errors
       # Get the live version
       version_id = overview_response.data['platforms'].first['inFlightVersion']['id']
 
