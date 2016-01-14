@@ -50,7 +50,7 @@ module Itc
   class App
     def initialize(itc_data)
       @data = itc_data
-      @versions = itc_data['versions'].map{|v| AppVersion.new(v) }
+      @versions = (itc_data['versions'] || itc_data['versionSets']).map{|v| AppVersion.new(v) }
     end
 
     def id
@@ -91,11 +91,11 @@ module Itc
     end
 
     def version
-      @data['version']
+      @data['version'] || @data['deliverableVersion']['version']
     end
 
     def state
-      @data['stateKey']
+      @data['stateKey'] || @data['deliverableVersion']['stateKey']
     end
 
     def <=>(other)
