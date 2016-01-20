@@ -91,11 +91,11 @@ module Itc
     end
 
     def version
-      @data['version'] || @data['deliverableVersion']['version']
+      @data['version'] || @data['deliverableVersion'].try(:[], 'version')
     end
 
     def state
-      @data['stateKey'] || @data['deliverableVersion']['stateKey']
+      @data['stateKey'] || @data['deliverableVersion'].try(:[], 'stateKey')
     end
 
     def <=>(other)
